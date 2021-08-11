@@ -9,7 +9,7 @@ BAM=$2
 GENOME=$1
 CORES=14
 
-conda activate braker
+# conda activate braker
 unset PYTHONPATH
 source /software/grit/tools/BRAKER/env.sh
 
