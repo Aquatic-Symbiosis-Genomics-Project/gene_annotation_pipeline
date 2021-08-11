@@ -30,6 +30,7 @@ pigz -p 12 -9 *.fastq
 cp $GENOME .
 
 # Index the genome fasta - default is 32GB
+mkdir genome_index
 $STAR --runThreadN 12 --runMode genomeGenerate --genomeDir genome_index --genomeFastaFiles *.fa
 
 # sorted BAM output takes way more memory, so we will sort it afterwards
