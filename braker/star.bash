@@ -39,6 +39,7 @@ $STAR --genomeDir genome_index --runThreadN 12 --readFilesIn *.fastq.gz --outFil
 # round two with splice junctions from #1
 $STAR --genomeDir genome_index --runThreadN 12 --readFilesIn *.fastq.gz --outFileNamePrefix out2 --outSAMtype BAM Unsorted --readFilesCommand zcat --sjdbFileChrStartEnd *.tab
 
-cp out2Aligned.out.bam $WB/
+mkdir -p $CWD/s1_alignment
+cp out2Aligned.out.bam $WB/s1_alignment/
 
-# rm -rf $GENOME
+rm -rf $GENOME
