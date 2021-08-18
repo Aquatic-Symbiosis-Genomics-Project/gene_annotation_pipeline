@@ -49,9 +49,8 @@ rule s2_braker:
      input:
        reference,
        rules.s1_alignment.output,
-       config['species']
      output:
        "s2_braker/s2_done"
      shell:
-       "bash ../braker/braker_test.bash {input};"
+       "bash ../braker/braker_test.bash {input} {config['species']};"
        " touch s2_braker/s2_done"
