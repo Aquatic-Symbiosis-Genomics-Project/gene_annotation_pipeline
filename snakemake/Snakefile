@@ -51,7 +51,7 @@ rule s2_braker:
        rules.s1_alignment.output,
        config['species']
      output:
-       "s2_braker_done"
+       "s2_braker/s2_done"
      shell:
        "bash ../braker/braker_test.bash {input};"
        " touch s2_braker/s2_done"
