@@ -42,7 +42,7 @@ rule s1_alignment:
     shell:
       "bash ../braker/star.bash {input} {output[0]}"
 
-rule s2_braker
+rule s2_braker:
      input:
        genome,
        rules.s1_alignment.output,
