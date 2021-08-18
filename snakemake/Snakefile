@@ -52,7 +52,7 @@ rule s2_braker:
      output:
        "s2_braker/s2_done"
      params:
-        species = congif['species']
+        species = config['species']
      shell:
        "bash ../braker/braker_test.bash {input} {params.species};"
        " touch s2_braker/s2_done"
