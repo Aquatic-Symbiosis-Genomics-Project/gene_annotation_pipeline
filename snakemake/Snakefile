@@ -51,6 +51,8 @@ rule s2_braker:
        rules.s1_alignment.output,
      output:
        "s2_braker/s2_done"
+     params:
+        species = congif['species']
      shell:
-       "bash ../braker/braker_test.bash {input} {config['species']};"
+       "bash ../braker/braker_test.bash {input} {params.species};"
        " touch s2_braker/s2_done"
