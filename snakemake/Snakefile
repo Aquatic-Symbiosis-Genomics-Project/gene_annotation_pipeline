@@ -47,7 +47,7 @@ rule s1_alignment:
 
 rule s2_braker:
      input:
-       genome,
+       reference,
        rules.s1_alignment.output,
        config['species']
      output:
