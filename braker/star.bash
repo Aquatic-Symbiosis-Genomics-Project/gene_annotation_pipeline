@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-# usage: star.bash <genome> <FASTQ file> 
+# usage: star.bash <genome> <FASTQ file> <OUTFILE> 
 # * depends on the fastq file ending in .fastq
 # * depends on the genome file ending in .fa
 # * will copy the resulting BAM file to the current directory
@@ -9,6 +9,7 @@
 GENOME=$1
 FASTQ=$2
 CWD=`pwd`
+OUTFILE=$3
 STAR=/software/npg/current/bin/star
 
 # change that if needed or add to the commandline
@@ -39,7 +40,6 @@ $STAR --genomeDir genome_index --runThreadN 12 --readFilesIn *.fastq.gz --outFil
 # round two with splice junctions from #1
 $STAR --genomeDir genome_index --runThreadN 12 --readFilesIn *.fastq.gz --outFileNamePrefix out2 --outSAMtype BAM Unsorted --readFilesCommand zcat --sjdbFileChrStartEnd *.tab
 
-mkdir -p $CWD/s1_alignment
-cp out2Aligned.out.bam $WB/s1_alignment/
+cp out2Aligned.out.bam $WB/$OUTFILE
 
 rm -rf $GENOME
