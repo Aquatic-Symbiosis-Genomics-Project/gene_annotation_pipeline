@@ -1,0 +1,11 @@
+genome: test_genome.fa
+bam: test_rnaseq.bam
+species: ladybird
+conda_envs:
+
+working_dir: './'
+
+analysis:
+  s1_alignment:
+    output: s1_alignment/star.bam
+    fastq: test_rnaseq.fastq

@@ -1,0 +1,54 @@
+"""
+==============================
+Snakemake annotation pipeline
+==============================
+- USAGE - locally - whilst using the annotation environment
+    snakemake --configfile config_file.yaml --cores 10
+- USAGE - cluster - whilst using the annotation environment
+    snakemake --configfile config_file.yaml --cores 10 --cluster-config
+    ./cluster.yaml --cluster "bsub -q {cluster.queue} -oo {cluster.output}
+    -eo {cluster.error} -M {cluster.memory} -R {cluster.resources} -J {cluster.jobname}"
+    -j 10 --use-conda
+
+shamelessly stolen from Damon
+"""
+
+import os
+import errno
+
+
+reference = config['genome']
+
+for key, value in analysis.items():
+    directory = os.path.join(mydir, key)
+    for param, vvlaue in value.items():
+        analysis_dict[key] = directory
+        try:
+            print(f'Working dir: {directory}')
+            os.makedirs(directory)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+
+rule all:
+   input: 's2_braker/s2_done'
+
+rule s1_alignment:
+    input:
+      reference,
+      analysis['s1_alignment']['fastq']
+    output:
+      analysis['s1_alignment']['output']
+    shell:
+      "bash ../braker/star.bash genome fastq {input} {output[0]}"
+
+rule s2_braker
+     input:
+       genome,
+       rules.s1_alignment.output,
+       config['species']
+     output:
+       "s2_braker_done"
+     shell:
+       "bash ../braker/braker_test.bash {input};"
+       " touch s2_braker/s2_done"
