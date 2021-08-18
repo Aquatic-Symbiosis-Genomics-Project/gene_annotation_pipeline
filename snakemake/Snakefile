@@ -40,7 +40,7 @@ rule s1_alignment:
     output:
       analysis['s1_alignment']['output']
     shell:
-      "bash ../braker/star.bash genome fastq {input} {output[0]}"
+      "bash ../braker/star.bash {input} {output[0]}"
 
 rule s2_braker
      input:
