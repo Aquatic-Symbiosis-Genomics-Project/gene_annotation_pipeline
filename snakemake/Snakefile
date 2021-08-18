@@ -18,6 +18,7 @@ import errno
 
 
 reference = config['genome']
+analysis  = config['analysis']
 
 for key, value in analysis.items():
     directory = os.path.join(mydir, key)
