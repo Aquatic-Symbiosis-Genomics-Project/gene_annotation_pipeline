@@ -50,7 +50,7 @@ rule s1_alignment:
       "s0_bam2fastq/R2.fq",
       analysis['s1_alignment']['output']
     shell:
-      "bash ../braker/star.bash {input} {output[0]}" #need to change the script to take optionally paired reads 
+      "bash ../braker/star.bash {input} {output[0]}" # need to change the script to take optionally paired reads 
 
 rule s2_braker:
      input:
@@ -61,7 +61,7 @@ rule s2_braker:
      params:
         species = config['species']
      shell:
-       "bash ../braker/braker_test.bash {input} {params.species};"
+       "bash ../braker/braker_test.bash {input} {params.species};" # needs maybe something to change to a working dir
        " touch s2_braker/s2_done"
 # s3_make_stats
 
