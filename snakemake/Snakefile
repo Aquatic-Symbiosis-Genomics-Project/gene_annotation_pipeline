@@ -16,7 +16,6 @@ shamelessly stolen from Damon
 import os
 import errno
 
-
 reference = config['genome']
 analysis  = config['analysis']
 mydir = config['working_dir']
@@ -34,16 +33,24 @@ for key, value in analysis.items():
                 raise
 
 rule all:
-   input: 's2_braker/s2_done'
+   input: 's2_braker/s2_done' # needs changing to s4 later
+
+rule s0_bam2fastq:
+    input:
+      analysis['s0_bam2fastq']['bam']
+    output:
+      output: a = "s0_bam2fastq/R1.fq", b = "s0_bam2fastq/R2.fq", c = "s0_bam2fastq/R0.fq" # not sure if we should cater the non-paired case
+    shell:
+        "samtools fastq -1 {output.a} -2 {output.b} -0 {output.c} {input}"
 
 rule s1_alignment:
     input:
       reference,
-      analysis['s1_alignment']['fastq']
-    output:
+      "s0_bam2fastq/R1.fq", 
+      "s0_bam2fastq/R2.fq",
       analysis['s1_alignment']['output']
     shell:
-      "bash ../braker/star.bash {input} {output[0]}"
+      "bash ../braker/star.bash {input} {output[0]}" #need to change the script to take optionally paired reads 
 
 rule s2_braker:
      input:
@@ -56,3 +63,6 @@ rule s2_braker:
      shell:
        "bash ../braker/braker_test.bash {input} {params.species};"
        " touch s2_braker/s2_done"
+# s3_make_stats
+
+# s4_make_hub
