@@ -24,7 +24,7 @@ bam = config['bam']
 species = config['species']
 
 rule all:
-   input: 's3_braker/s2_done'
+    input: 's3_braker/s2_done'
 
 rule s0_mask_genome:
     input:
@@ -33,7 +33,6 @@ rule s0_mask_genome:
     output:
        "s0_mask_genome/infile.fa.masked"
     shell:
-       "cd s0_mask_genome",
        "bash {scripts}/repeat_masker.bash {input}"
 
 rule s1_extract_fastq:
