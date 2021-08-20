@@ -14,7 +14,7 @@ source /software/grit/tools/BRAKER/env.sh
 mkdir -p $WD
 
 # copy fastq
-cp $FASTQ3 $WD/fq3.fq.gz
+cp $FASTQ1 $WD/fq3.fq.gz
 cp $GENOME $WD/genome.fa
 
 cd $WD
