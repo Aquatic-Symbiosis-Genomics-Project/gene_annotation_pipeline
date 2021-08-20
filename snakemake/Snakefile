@@ -58,11 +58,10 @@ rule s3_braker:
      input:
        "s0_mask_genome/infile.fa.masked",
        "s2_alignment/out2Aligned.out.bam",
-       "s3_braker"
      output:
        "s3_braker/s2_done"
      params:
         species
      shell:
-       "bash ../braker/braker_test.bash {input} {params.species};"
+       "bash ../braker/braker_test.bash {input} s3_braker {params.species};"
        " touch s3_braker/s3_done"
