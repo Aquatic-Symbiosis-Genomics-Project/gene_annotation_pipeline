@@ -4,8 +4,7 @@ repeatLibrary: /lustre/scratch123/tol/teams/grit/mh6/braker_test_data/icAdaBipu1
 species: ladybird
 working_dir: './'
 analysis:
+  s0_bam2fastq:
+    bam: test.bam
   s1_alignment:
-    output: s1_alignment/star.bam
-    fastq: test_rnaseq.fastq
   s2_braker:
-    output: none
