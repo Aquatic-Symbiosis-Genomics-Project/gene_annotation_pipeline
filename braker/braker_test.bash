@@ -1,8 +1,9 @@
 #!/usr/bin/bash
 
-SPECIES=$4
-WD=$3
-BAM=$2
+SPECIES=$5
+WD=$4
+BAM1=$2
+BAM2=$3
 GENOME=$1
 CORES=11
 
@@ -25,8 +26,8 @@ export GUSHR_PATH=/software/grit/tools/GUSHR
 mkdir -p $WD
 
 cp $GENOME $WD/genome.sm.fa
-cp $BAM $WD/rnaseq.bam
-
+cp $BAM1 $WD/rnaseq.bam
+cp $BAM2 $WD/rnaseq2.bam
 cd $WD
 
-/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --softmasking --bam=rnaseq.bam -species $SPECIES --cores=$CORES --nocleanup --gff3
+/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --softmasking --bam=rnaseq.bam,rnaseq2.bam -species $SPECIES --cores=$CORES --nocleanup --gff3

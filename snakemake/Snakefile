@@ -78,5 +78,5 @@ rule s3_braker:
      output:
        "s3_braker/s2_done"
      shell:
-       "bash {scripts}/braker_test.bash {input[0]} {input[1]},{input[2]} s3_braker {species};"
+       "bash {scripts}/braker_test.bash {input} s3_braker {species};"
        " touch s3_braker/s3_done"
