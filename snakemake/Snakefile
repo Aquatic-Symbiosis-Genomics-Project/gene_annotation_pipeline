@@ -39,10 +39,17 @@ rule s1_extract_fastq:
     input:
       bam
     output:
-        a = "s1_bam2fastq/R1.fq.gz", b = "s1_bam2fastq/R2.fq.gz", c = "s1_bam2fastq/R0.fq.gz"
+        a = "s1_bam2fastq/R1.fq", b = "s1_bam2fastq/R2.fq", c = "s1_bam2fastq/R0.fq"
     shell:
         "samtools fastq -1 {output.a} -2 {output.b} -0 {output.c} {input}; "
-        "pigz -p 12 -9 s1_bam2fastq/*.fq"
+
+rule pigz:
+    input:
+        "s1_bam2fastq/R1.fq", "s1_bam2fastq/R2.fq", "s1_bam2fastq/R0.fq"
+    output:
+        "s1_bam2fastq/R1.fq.gz", "s1_bam2fastq/R2.fq.gz", "s1_bam2fastq/R0.fq.gz"
+    shell:
+        "pigz -p 12 -9 {input}"
 
 rule s2_alignment:
     input:
