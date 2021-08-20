@@ -1,4 +1,4 @@
-[#!/bin/bash[]
+#!/bin/bash
 
 GENOME=$1
 FASTQ1=$2
