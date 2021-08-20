@@ -19,6 +19,8 @@ export GENEMARK_PATH=/lustre/scratch123/tol/teams/grit/mh6/gmes_linux_64
 export PERL5LIB=/software/grit/conda/envs/braker/lib/site_perl/5.26.2/
 export PATH=/software/jre1.8.0_131/bin:/software/grit/conda/envs/python3/bin/:$PATH
 export MAKEHUB_PATH=/software/grit/tools/MakeHub/
+export SAMTOOLS_PATH=/software/grit/bin/samtools
+export GUSHR_PATH=/software/grit/tools/GUSHR
 
 mkdir -p $WD
 
