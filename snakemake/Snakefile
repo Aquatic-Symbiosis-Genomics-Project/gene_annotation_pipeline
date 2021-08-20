@@ -65,7 +65,7 @@ rule s2_alignment:
 rule s2b_alignment:
     input:
       genome,
-      "s1_bam2fastq/R3.fq.gz",
+      "s1_bam2fastq/R0.fq.gz",
     output:
       's2b_alignment/out4Aligned.out.bam'
     shell:
