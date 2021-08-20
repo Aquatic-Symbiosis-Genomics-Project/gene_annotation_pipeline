@@ -62,12 +62,21 @@ rule s2_alignment:
     shell:
       "bash {scripts}/star.bash {input} s2_alignment"
 
+rule s2b_alignment:
+    input:
+      genome,
+      "s1_bam2fastq/R3.fq.gz",
+    output:
+      's2b_alignment/out4Aligned.out.bam'
+    shell:
+      "bash {scripts}/star.bash {input} s2b_alignment"
 rule s3_braker:
      input:
        "s0_mask_genome/infile.fa.masked",
        "s2_alignment/out2Aligned.out.bam",
+       's2b_alignment/out4Aligned.out.bam'
      output:
        "s3_braker/s2_done"
      shell:
-       "bash {scripts}/braker_test.bash {input} s3_braker {species};"
+       "bash {scripts}/braker_test.bash {input[0]} {input[1]},{input[2]} s3_braker {species};"
        " touch s3_braker/s3_done"
