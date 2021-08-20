@@ -36,7 +36,6 @@ rule s1_extract_fastq:
     input:
       config['bam']
     output:
-      output: 
         a = "s1_bam2fastq/R1.fq.gz"
         b = "s1_bam2fastq/R2.fq.gz"
         c = "s1_bam2fastq/R0.fq.gz"
