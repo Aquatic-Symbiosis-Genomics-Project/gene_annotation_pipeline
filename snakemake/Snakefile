@@ -4,11 +4,12 @@ Snakemake annotation pipeline
 ==============================
 - USAGE - locally - whilst using the annotation environment
     snakemake --configfile config_file.yaml --cores 10
+
 - USAGE - cluster - whilst using the annotation environment
     snakemake --configfile config_file.yaml --cores 10 --cluster-config
     ./cluster.yaml --cluster "bsub -q {cluster.queue} -oo {cluster.output}
     -eo {cluster.error} -M {cluster.memory} -R {cluster.resources} -J {cluster.jobname}"
-    -j 10 --use-conda
+    -j 12
 
 shamelessly stolen from Damon
 """
@@ -16,43 +17,49 @@ shamelessly stolen from Damon
 import os
 import errno
 
-
-reference = config['genome']
-analysis  = config['analysis']
-mydir = config['working_dir']
-analysis_dict = {}
-
-for key, value in analysis.items():
-    directory = os.path.join(mydir, key)
-    for param, vvlaue in value.items():
-        analysis_dict[key] = directory
-        try:
-            print(f'Working dir: {directory}')
-            os.makedirs(directory)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
+scripts = '../../braker'
 
 rule all:
-   input: 's2_braker/s2_done'
+   input: 's3_braker/s2_done'
 
-rule s1_alignment:
+rule s0_mask_genome:
     input:
-      reference,
-      analysis['s1_alignment']['fastq']
+      config['reference'],
+      config['repeatLibrary']
     output:
-      analysis['s1_alignment']['output']
+      's0_mask_genome/infile.fa.masked'
     shell:
-      "bash ../braker/star.bash {input} {output[0]}"
+       "cd s0_mask_genome",
+       "bash {scripts}/repeat_masker.bash {input}"
 
-rule s2_braker:
+rule s1_extract_fastq:
+    input:
+      config['bam']
+    output:
+      output: a = "s1_bam2fastq/R1.fq.gz", b = "s1_bam2fastq/R2.fq.gz", c = "s1_bam2fastq/R0.fq.gz" # not sure if we should cater the non-paired case
+    shell:
+        "samtools fastq -1 {output.a} -2 {output.b} -0 {output.c} {input}; ",
+        "pigz -p 12 -9 s1_bam2fastq/*.fq"
+
+rule s2_alignment:
+    input:
+      "s0_mask_genome/infile.fa.masked",
+      "s1_bam2fastq/R1.fq.gz",
+      "s1_bam2fastq/R2.fq.gz"
+    output:
+      's2_alignment/out2Aligned.out.bam'
+    shell:
+      "bash {scripts}/star.bash {input} s2_alignment"
+
+rule s3_braker:
      input:
-       reference,
-       rules.s1_alignment.output,
+       "s0_mask_genome/infile.fa.masked",
+       "s2_alignment/out2Aligned.out.bam",
+       "s3_braker"
      output:
-       "s2_braker/s2_done"
+       "s3_braker/s2_done"
      params:
         species = config['species']
      shell:
        "bash ../braker/braker_test.bash {input} {params.species};"
-       " touch s2_braker/s2_done"
+       " touch s3_braker/s3_done"

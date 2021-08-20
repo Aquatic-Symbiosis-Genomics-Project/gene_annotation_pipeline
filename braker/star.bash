@@ -1,19 +1,13 @@
-#!/usr/bin/bash
-# usage: star.bash <genome> <FASTQ file> <OUTFILE> 
-# * depends on the fastq file ending in .fastq
-# * depends on the genome file ending in .fa
-# * will copy the resulting BAM file to the current directory
-# BSUB bsub -o o.txt -M32000 -R'select[mem>32000] rusage[mem=32000] span[hosts=1]'  -n 12
+#!/bin/bash
 
 
 GENOME=$1
-FASTQ=$2
-CWD=`pwd`
-OUTFILE=$3
+FASTQ1=$2
+FASTQ2=$3
+WD=$4
+
 STAR=/software/npg/current/bin/star
 
-# change that if needed or add to the commandline
-WD=/tmp
 
 conda activate braker
 unset PYTHONPATH
@@ -21,25 +15,21 @@ source /software/grit/tools/BRAKER/env.sh
 
 # /software/npg/current/bin/star
 
-cd /tmp
-[-d $GENOME ] && rm -rf $GENOME
-mkdir $GENOME
+mkdir -p $WD
 
-# copy fastq and compress it
-cp $FASTQ .
-pigz -p 12 -9 *.fastq
-cp $GENOME .
+# copy fastq
+cp $FASTQ1 $WD/fq1.fq.gz
+cp $FASTQ2 $WD/fq2.fq.gz
+cp $GENOME $WD/genome.fa
+
+cd $WD
 
 # Index the genome fasta - default is 32GB
 mkdir genome_index
-$STAR --runThreadN 12 --runMode genomeGenerate --genomeDir genome_index --genomeFastaFiles *.fa
+$STAR --runThreadN 12 --runMode genomeGenerate --genomeDir genome_index --genomeFastaFiles genome.fa
 
 # sorted BAM output takes way more memory, so we will sort it afterwards
-$STAR --genomeDir genome_index --runThreadN 12 --readFilesIn *.fastq.gz --outFileNamePrefix out --outSAMtype BAM Unsorted --readFilesCommand zcat
+$STAR --genomeDir genome_index --runThreadN 12 --readFilesIn $FASTQ1 $FASTQ2 --outFileNamePrefix out --outSAMtype BAM Unsorted --readFilesCommand zcat
 
 # round two with splice junctions from #1
-$STAR --genomeDir genome_index --runThreadN 12 --readFilesIn *.fastq.gz --outFileNamePrefix out2 --outSAMtype BAM Unsorted --readFilesCommand zcat --sjdbFileChrStartEnd *.tab
-
-cp out2Aligned.out.bam $WB/$OUTFILE
-
-rm -rf $GENOME
+$STAR --genomeDir genome_index --runThreadN 12 --readFilesIn $FASTQ1 $FASTQ2 --outFileNamePrefix out2 --outSAMtype BAM Unsorted --readFilesCommand zcat --sjdbFileChrStartEnd *.tab
