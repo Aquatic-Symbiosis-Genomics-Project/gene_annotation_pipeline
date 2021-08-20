@@ -36,9 +36,7 @@ rule s1_extract_fastq:
     input:
       config['bam']
     output:
-        a = "s1_bam2fastq/R1.fq.gz"
-        b = "s1_bam2fastq/R2.fq.gz"
-        c = "s1_bam2fastq/R0.fq.gz"
+        a = "s1_bam2fastq/R1.fq.gz", b = "s1_bam2fastq/R2.fq.gz", c = "s1_bam2fastq/R0.fq.gz"
     shell:
         "samtools fastq -1 {output.a} -2 {output.b} -0 {output.c} {input}; "
         "pigz -p 12 -9 s1_bam2fastq/*.fq"
