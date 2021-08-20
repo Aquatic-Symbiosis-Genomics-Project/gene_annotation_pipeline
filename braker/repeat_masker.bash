@@ -12,7 +12,7 @@ module load ISG/singularity/
 
 export SINGULARITY_TMPDIR=/lustre/scratch123/tol/teams/grit/mh6/singularity
 export SINGULARITY_CACHEDIR=/lustre/scratch123/tol/teams/grit/mh6/singularity
-IMG=/lustre/scratch123/tol/teams/grit/mh6/singularity/tetools.sif .
+IMG=/lustre/scratch123/tol/teams/grit/mh6/singularity/tetools.sif
 
 mkdir -p $DIR
 

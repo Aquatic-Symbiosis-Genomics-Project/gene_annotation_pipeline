@@ -28,12 +28,12 @@ rule all:
 
 rule s0_mask_genome:
     input:
-      genome,
-      repeatLibrary
+       genome,
+       repeatLibrary
     output:
        "s0_mask_genome/infile.fa.masked"
     shell:
-       "bash {scripts}/repeat_masker.bash {input}"
+       "bash {scripts}/repeat_masker.bash {input} s0_mask_genome"
 
 rule s1_extract_fastq:
     input:
