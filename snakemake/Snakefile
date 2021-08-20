@@ -70,5 +70,5 @@ rule s3_braker:
      params:
         species
      shell:
-       "bash ../braker/braker_test.bash {input} s3_braker {params.species};"
+       "bash {scripts}/braker_test.bash {input} s3_braker {params.species};"
        " touch s3_braker/s3_done"
