@@ -20,6 +20,5 @@ cp $INFILE $DIR/infile.fa
 cp $LIB $DIR/library.fa
 
 cd $DIR
-WD=`pwd`
-echo "running: singularity exec --bind $WD:$HOME $IMG RepeatMasker -lib library.fa infile.fa -xsmall -pa 11" 
+WD=`pwd` 
 singularity exec --bind `pwd`:$HOME $IMG RepeatMasker -lib library.fa infile.fa -xsmall -pa 11

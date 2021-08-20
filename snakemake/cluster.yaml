@@ -1,7 +1,7 @@
 __default__:
-  memory: 20000
+  memory: 32000
   queue: 'basement'
-  resources: "\"select[mem>20000] rusage[mem=20000] span[hosts=1]\""
+  resources: "\"select[mem>32000] rusage[mem=32000] span[hosts=1]\""
   output: "{params.myDir}/{rule}.out"
   error: "{params.myDir}/{rule}.err"
   jobname: "{rule}"

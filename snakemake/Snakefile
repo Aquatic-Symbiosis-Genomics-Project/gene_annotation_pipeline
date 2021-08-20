@@ -53,7 +53,7 @@ rule pigz:
 
 rule s2_alignment:
     input:
-      "s0_mask_genome/infile.fa.masked",
+      genome,
       "s1_bam2fastq/R1.fq.gz",
       "s1_bam2fastq/R2.fq.gz"
     output:
