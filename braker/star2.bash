@@ -2,7 +2,7 @@
 
 GENOME=$1
 FASTQ1=$2
-WD=$4
+WD=$3
 
 STAR=/software/npg/current/bin/star
 
