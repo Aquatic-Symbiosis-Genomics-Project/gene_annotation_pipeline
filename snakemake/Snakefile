@@ -12,6 +12,7 @@ Snakemake annotation pipeline
     -j 12
 
 shamelessly stolen from Damon
+* for testing: bsub -I -M32000 -R'select[mem>32000 && tmp>32G] rusage[mem=32000,tmp=32G] span[hosts=1]' -n 12
 """
 
 import os
@@ -67,8 +68,6 @@ rule s3_braker:
        "s2_alignment/out2Aligned.out.bam",
      output:
        "s3_braker/s2_done"
-     params:
-        species
      shell:
-       "bash {scripts}/braker_test.bash {input} s3_braker {params.species};"
+       "bash {scripts}/braker_test.bash {input} s3_braker {species};"
        " touch s3_braker/s3_done"

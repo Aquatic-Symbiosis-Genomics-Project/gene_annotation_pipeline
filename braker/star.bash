@@ -1,5 +1,4 @@
-#!/bin/bash
-
+[#!/bin/bash[]
 
 GENOME=$1
 FASTQ1=$2
@@ -8,12 +7,10 @@ WD=$4
 
 STAR=/software/npg/current/bin/star
 
-
+source ~/.bashrc
 conda activate braker
 unset PYTHONPATH
 source /software/grit/tools/BRAKER/env.sh
-
-# /software/npg/current/bin/star
 
 mkdir -p $WD
 
