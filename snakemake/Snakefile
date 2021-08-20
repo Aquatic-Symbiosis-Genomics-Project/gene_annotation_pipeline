@@ -17,7 +17,7 @@ shamelessly stolen from Damon
 import os
 import errno
 
-scripts = '../../braker'
+scripts = '../braker'
 genome  = config['genome']
 repeatLibrary = config['repeatLibrary']
 bam = config['bam']
