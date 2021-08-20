@@ -69,7 +69,7 @@ rule s2b_alignment:
     output:
       's2b_alignment/out4Aligned.out.bam'
     shell:
-      "bash {scripts}/star.bash {input} s2b_alignment"
+      "bash {scripts}/star2.bash {input} s2b_alignment"
 rule s3_braker:
      input:
        "s0_mask_genome/infile.fa.masked",
