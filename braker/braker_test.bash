@@ -30,4 +30,4 @@ cp $BAM1 $WD/rnaseq.bam
 cp $BAM2 $WD/rnaseq2.bam
 cd $WD
 
-/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --softmasking --bam=rnaseq.bam,rnaseq2.bam -species $SPECIES --cores=$CORES --nocleanup --gff3
+/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --UTR=on --softmasking --bam=rnaseq.bam,rnaseq2.bam -species $SPECIES --cores=$CORES --nocleanup --gff3
