@@ -25,7 +25,7 @@ bam = config['bam']
 species = config['species']
 
 rule all:
-    input: 's3_braker/s2_done'
+    input: 's3_braker/s3_done'
 
 rule s0_mask_genome:
     input:
@@ -76,7 +76,7 @@ rule s3_braker:
        "s2_alignment/out2Aligned.out.bam",
        's2b_alignment/out4Aligned.out.bam'
      output:
-       "s3_braker/s2_done"
+       "s3_braker/s3_done"
      shell:
        "bash {scripts}/braker_test.bash {input} s3_braker {species};"
        " touch s3_braker/s3_done"
