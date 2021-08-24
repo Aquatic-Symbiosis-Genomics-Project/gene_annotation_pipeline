@@ -1,0 +1,10 @@
+genome: /lustre/scratch123/tol/teams/grit/mh6/braker_test_data/icAdaBipu_SUPER1.fa
+bam: /lustre/scratch123/tol/teams/grit/mh6/braker_test_data/rnaseq_SUPER1.bam
+repeatLibrary: /lustre/scratch123/tol/teams/grit/mh6/braker_test_data/icAdaBipu1-families.fa
+species: ladybird
+working_dir: './'
+analysis:
+  s0_bam2fastq:
+    bam: test.bam
+  s1_alignment:
+  s2_braker:

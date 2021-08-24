@@ -1,0 +1,82 @@
+"""
+==============================
+Snakemake annotation pipeline
+==============================
+- USAGE - locally - whilst using the annotation environment
+    snakemake --configfile config_file.yaml --cores 10
+
+- USAGE - cluster - whilst using the annotation environment
+    snakemake --configfile config_file.yaml --cores 10 --cluster-config
+    ./cluster.yaml --cluster "bsub -q {cluster.queue} -oo {cluster.output}
+    -eo {cluster.error} -M {cluster.memory} -R {cluster.resources} -J {cluster.jobname}"
+    -j 12
+
+shamelessly stolen from Damon
+* for testing: bsub -I -M32000 -R'select[mem>32000 && tmp>32G] rusage[mem=32000,tmp=32G] span[hosts=1]' -n 12
+"""
+
+import os
+import errno
+
+scripts = '../braker'
+genome  = config['genome']
+repeatLibrary = config['repeatLibrary']
+bam = config['bam']
+species = config['species']
+
+rule all:
+    input: 's3_braker/s3_done'
+
+rule s0_mask_genome:
+    input:
+       genome,
+       repeatLibrary
+    output:
+       "s0_mask_genome/infile.fa.masked"
+    shell:
+       "bash {scripts}/repeat_masker.bash {input} s0_mask_genome"
+
+rule s1_extract_fastq:
+    input:
+      bam
+    output:
+        a = "s1_bam2fastq/R1.fq", b = "s1_bam2fastq/R2.fq", c = "s1_bam2fastq/R0.fq"
+    shell:
+        "samtools fastq -1 {output.a} -2 {output.b} -0 {output.c} {input}; "
+
+rule pigz:
+    input:
+        "s1_bam2fastq/R1.fq", "s1_bam2fastq/R2.fq", "s1_bam2fastq/R0.fq"
+    output:
+        "s1_bam2fastq/R1.fq.gz", "s1_bam2fastq/R2.fq.gz", "s1_bam2fastq/R0.fq.gz"
+    shell:
+        "pigz -p 12 -9 {input}"
+
+rule s2_alignment:
+    input:
+      genome,
+      "s1_bam2fastq/R1.fq.gz",
+      "s1_bam2fastq/R2.fq.gz"
+    output:
+      's2_alignment/out2Aligned.out.bam'
+    shell:
+      "bash {scripts}/star.bash {input} s2_alignment"
+
+rule s2b_alignment:
+    input:
+      genome,
+      "s1_bam2fastq/R0.fq.gz",
+    output:
+      's2b_alignment/out4Aligned.out.bam'
+    shell:
+      "bash {scripts}/star2.bash {input} s2b_alignment"
+rule s3_braker:
+     input:
+       "s0_mask_genome/infile.fa.masked",
+       "s2_alignment/out2Aligned.out.bam",
+       's2b_alignment/out4Aligned.out.bam'
+     output:
+       "s3_braker/s3_done"
+     shell:
+       "bash {scripts}/braker_test.bash {input} s3_braker {species};"
+       " touch s3_braker/s3_done"
