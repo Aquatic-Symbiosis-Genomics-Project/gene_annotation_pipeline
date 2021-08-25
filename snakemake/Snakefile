@@ -25,7 +25,7 @@ bam = config['bam']
 species = config['species']
 
 rule all:
-    input: 's3_braker/s3_done'
+    input: 's4_braker/s4_done'
 
 rule s0_mask_genome:
     input:
@@ -70,6 +70,7 @@ rule s2b_alignment:
       's2b_alignment/out4Aligned.out.bam'
     shell:
       "bash {scripts}/star2.bash {input} s2b_alignment"
+
 rule s3_braker:
      input:
        "s0_mask_genome/infile.fa.masked",
@@ -78,5 +79,12 @@ rule s3_braker:
      output:
        "s3_braker/s3_done"
      shell:
-       "bash {scripts}/braker_test.bash {input} s3_braker {species};"
-       " touch s3_braker/s3_done"
+       "bash {scripts}/braker_test.bash {input} s3_braker {species} && touch s3_done"
+
+rule s4_makehub:
+     input:
+       "s3_braker/s3_done"
+     output:
+       "s4_makehub/s4_done"
+     shell:
+       "bash {scripts}/makehub.bash {genome} {species} && touch s4_done"
