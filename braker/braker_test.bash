@@ -30,4 +30,10 @@ cp $BAM1 $WD/rnaseq.bam
 cp $BAM2 $WD/rnaseq2.bam
 cd $WD
 
+SPECIESDIR="/lustre/scratch123/tol/teams/grit/mh6/braker/augustus-config/species/$SPECIES"
+if [ -d "$SPECIESDIR" ]
+	then
+		rm -rf $SPECIESDIR
+fi
+
 /software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --UTR=on --softmasking --bam=rnaseq.bam,rnaseq2.bam -species $SPECIES --cores=$CORES --nocleanup --gff3
