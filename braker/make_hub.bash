@@ -3,6 +3,8 @@ GENOME=$1
 LABEL=$2
 
 source ~/.bashrc
+eval "$(conda shell.bash hook)"
+
 conda activate braker
 unset PYTHONPATH
 source /software/grit/tools/BRAKER/env.sh
@@ -17,6 +19,11 @@ export PATH=/software/jre1.8.0_131/bin:/software/grit/conda/envs/python3/bin/:$P
 export MAKEHUB_PATH=/software/grit/tools/MakeHub
 export SAMTOOLS_PATH=/software/grit/bin
 export GUSHR_PATH=/software/grit/tools/GUSHR
+
+if [ -d s4_makehub ]
+	then
+		rm -rf s4_makehub
+fi
 
 mkdir s4_makehub
 cd s4_makehub
