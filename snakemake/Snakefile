@@ -87,4 +87,4 @@ rule s4_makehub:
      output:
        "s4_makehub/s4_done"
      shell:
-       "bash {scripts}/makehub.bash {genome} {species} && touch s4_done"
+       "bash {scripts}/make_hub.bash {genome} {species} && touch s4_done"
