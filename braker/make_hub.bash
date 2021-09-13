@@ -28,4 +28,4 @@ fi
 mkdir s4_makehub
 cd s4_makehub
 
-/lustre/scratch123/tol/teams/grit/mh6/MakeHub/make_hub.py -g $GENOME -L $LABEL -l $LABEL -e test@email.ac.uk -X ../s3_braker/braker -b ../s2_alignment/out2Aligned.out.bam ../s2b_alignment/out4Aligned.out.bam
+python /lustre/scratch123/tol/teams/grit/mh6/MakeHub/make_hub.py -g $GENOME -L $LABEL -l $LABEL -e test@email.ac.uk -X ../s3_braker/braker -b ../s2_alignment/out2Aligned.out.bam ../s2b_alignment/out4Aligned.out.bam
