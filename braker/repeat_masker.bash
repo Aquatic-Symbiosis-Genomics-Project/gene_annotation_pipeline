@@ -10,8 +10,8 @@ module load ISG/singularity/
 
 #conda activate singularity env
 
-export SINGULARITY_TMPDIR=/lustre/scratch123/tol/teams/grit/mh6/singularity
-export SINGULARITY_CACHEDIR=/lustre/scratch123/tol/teams/grit/mh6/singularity
+export SINGULARITY_TMPDIR=/lustre/scratch123/tol/teams/grit/mh6/singularity/$USER
+export SINGULARITY_CACHEDIR=/lustre/scratch123/tol/teams/grit/mh6/singularity/$USER
 IMG=/lustre/scratch123/tol/teams/grit/mh6/singularity/tetools.sif
 
 mkdir -p $DIR
