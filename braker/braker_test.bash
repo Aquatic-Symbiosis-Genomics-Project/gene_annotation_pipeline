@@ -30,20 +30,20 @@ cp $BAM1 $WD/rnaseq.bam
 cp $BAM2 $WD/rnaseq2.bam
 cd $WD
 
+bam1=rnaseq.bam
+bam2=rnaseq2.bam
+
 # bit of logic to avoid empty bam files being passed through
 export bams=''
-if [[ $(stat -c%s $BAM1) > 20000  && $(stat -c%s $BAM2) > 20000 ]]
+if [[ $(stat -c%s $bam1) > 20000  && $(stat -c%s $bam2) > 20000 ]]
 	then 
-		bams="rnaseq.bam,rnaseq2.bam"
-elif [[ $(stat -c%s $BAM1) > 20000 ]]
+		bams="$bam1,$bam2"
+elif [[ $(stat -c%s $bam1) > 20000 ]]
 	then
-		bams="rnaseq.bam"
-elif [[ $(stat -c%s $BAM2) > 20000 ]]
+		bams="$bam1"
+elif [[ $(stat -c%s $bam2) > 20000 ]]
 	then
-		bams="rnaseq2.bam"
-else
-	# that is the case that shouldn't happen - but can be extended for protein-hints, etc.
-	exit(1)
+		bams="$bam2"
 fi
 
 SPECIESDIR="/lustre/scratch123/tol/teams/grit/mh6/braker/augustus-config/species/$SPECIES"
