@@ -30,13 +30,30 @@ cp $BAM1 $WD/rnaseq.bam
 cp $BAM2 $WD/rnaseq2.bam
 cd $WD
 
+# bit of logic to avoid empty bam files being passed through
+export bams=''
+if [ (( $(stat -c%s $BAM1) > 20000  && $(stat -c%s $BAM2) > 20000 )) ]
+	then 
+		bams="rnaseq.bam,rnaseq2.bam"
+elif [ (( $(stat -c%s $BAM1) > 20000 )) ]
+	then
+		bams="rnaseq.bam"
+elif [ (( $(stat -c%s $BAM2) > 20000 )) ]
+	then
+		bams="rnaseq2.bam"
+else
+	# that is the case that shouldn't happen - but can be extended for protein-hints, etc.
+	exit(1)
+fi
+
 SPECIESDIR="/lustre/scratch123/tol/teams/grit/mh6/braker/augustus-config/species/$SPECIES"
 if [ -d "$SPECIESDIR" ]
 	then
 		rm -rf $SPECIESDIR
 fi
 
-/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --UTR=on --softmasking --bam=rnaseq.bam,rnaseq2.bam -species $SPECIES --cores=$CORES --nocleanup --gff3
+/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --UTR=on --softmasking --bam=$bams -species $SPECIES --cores=$CORES --nocleanup --gff3
 
 # for snakemake
 touch s3_done
+../s2b_alignment/out4Aligned.out.bam
