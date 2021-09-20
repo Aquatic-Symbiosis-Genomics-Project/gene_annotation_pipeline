@@ -32,13 +32,13 @@ cd $WD
 
 # bit of logic to avoid empty bam files being passed through
 export bams=''
-if [ (( $(stat -c%s $BAM1) > 20000  && $(stat -c%s $BAM2) > 20000 )) ]
+if [[ $(stat -c%s $BAM1) > 20000  && $(stat -c%s $BAM2) > 20000 ]]
 	then 
 		bams="rnaseq.bam,rnaseq2.bam"
-elif [ (( $(stat -c%s $BAM1) > 20000 )) ]
+elif [[ $(stat -c%s $BAM1) > 20000 ]]
 	then
 		bams="rnaseq.bam"
-elif [ (( $(stat -c%s $BAM2) > 20000 )) ]
+elif [[ $(stat -c%s $BAM2) > 20000 ]]
 	then
 		bams="rnaseq2.bam"
 else
