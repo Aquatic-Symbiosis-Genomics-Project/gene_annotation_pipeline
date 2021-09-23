@@ -56,4 +56,3 @@ fi
 
 # for snakemake
 touch s3_done
-../s2b_alignment/out4Aligned.out.bam
