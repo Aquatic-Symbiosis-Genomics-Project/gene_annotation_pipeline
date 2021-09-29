@@ -23,6 +23,7 @@ genome  = config['genome']
 repeatLibrary = config['repeatLibrary']
 bam = config['bam']
 species = config['species']
+work_dir = config['workdir']
 
 rule all:
     input: 's4_makehub/s4_done'
