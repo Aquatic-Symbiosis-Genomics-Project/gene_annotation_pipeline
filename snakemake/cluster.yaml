@@ -2,20 +2,20 @@ __default__:
   memory: 32000
   queue: 'basement'
   resources: "\"select[mem>32000] rusage[mem=32000] span[hosts=1]\""
-  output: "{params.myDir}/{rule}.out"
-  error: "{params.myDir}/{rule}.err"
+  output: "{rule}.out"
+  error: "{rule}.err"
   jobname: "{rule}"
 
 s1_extract_fastq:
   memory: 10000
   queue: 'normal'
   resources: "\"select[mem>10000] rusage[mem=10000] span[hosts=1]\""
-  output: "config['workdir']/{rule}.out"
-  error: "config['workdir']/{rule}.err"
+  output: "config['work_dir']/{rule}.out"
+  error: "config['work_dir']/{rule}.err"
   
 s4_makehub:
   memory: 24000
   queue: 'normal'
   resources: "\"select[mem>24000] rusage[mem=24000] span[hosts=1]\""
-  output: "config['workdir']/{rule}.out"
-  error: "config['workdir']/{rule}.err"
+  output: "config['work_dir']/{rule}.out"
+  error: "config['work_dir']/{rule}.err"
