@@ -35,13 +35,13 @@ bam2=rnaseq2.bam
 
 # bit of logic to avoid empty bam files being passed through
 export bams=''
-if [[ $(stat -c%s $bam1) > 20000  && $(stat -c%s $bam2) > 20000 ]]
+if [[ $(stat -c%s $bam1) > 21000  && $(stat -c%s $bam2) > 21000 ]]
 	then 
 		bams="$bam1,$bam2"
-elif [[ $(stat -c%s $bam1) > 20000 ]]
+elif [[ $(stat -c%s $bam1) > 21000 ]]
 	then
 		bams="$bam1"
-elif [[ $(stat -c%s $bam2) > 20000 ]]
+elif [[ $(stat -c%s $bam2) > 21000 ]]
 	then
 		bams="$bam2"
 fi
