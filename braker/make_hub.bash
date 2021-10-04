@@ -19,6 +19,7 @@ export PATH=/software/jre1.8.0_131/bin:$PATH
 export MAKEHUB_PATH=/software/grit/tools/MakeHub
 export SAMTOOLS_PATH=/software/grit/bin
 export GUSHR_PATH=/software/grit/tools/GUSHR
+export LC_COLLATE=C
 
 if [ -d s4_makehub ]
 	then
