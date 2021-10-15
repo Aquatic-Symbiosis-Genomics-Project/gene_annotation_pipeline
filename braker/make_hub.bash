@@ -34,13 +34,13 @@ bam2=../s2b_alignment/out4Aligned.out.bam
 bams=""
 
 # bit of logic to avoid empty bam files being passed through
-if [[ $(stat -c%s $bam1) > 20000  && $(stat -c%s $bam2) > 20000 ]]
+if [[ $(stat -c%s $bam1) > 30000  && $(stat -c%s $bam2) > 30000 ]]
 	then 
 		bams="$bam1 $bam2"
-elif [[ $(stat -c%s $bam1) > 20000 ]]
+elif [[ $(stat -c%s $bam1) > 30000 ]]
 	then
 		bams="$bam1"
-elif [[ $(stat -c%s $bam2) > 20000 ]]
+elif [[ $(stat -c%s $bam2) > 30000 ]]
 	then
 		bams="$bam2"
 fi
