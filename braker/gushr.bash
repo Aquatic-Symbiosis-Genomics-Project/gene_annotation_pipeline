@@ -34,6 +34,6 @@ elif [[ $(stat -c%s $bam2) > 30000 ]]
 		bams="$bam2"
 fi
 
-/software/grit/tools/GUSHR/gushr.py -t $GTF -b $bams -g $GENOME -o gushr -c $CORES
+/software/grit/tools/GUSHR/gushr.py -t ../$GTF -b $bams -g $GENOME -o gushr -c $CORES
 
 touch gushr_done
