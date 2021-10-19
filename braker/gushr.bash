@@ -1,12 +1,12 @@
 #/bin/bash
 
-# gushr.bash bam1 bam2 genome.fa workDir genes.gtf
+# gushr.bash bam1 bam2 genome.fa genes.gtf workDir
 
-WD=$4
+WD=$5
 BAM1=$2
 BAM2=$3
 GENOME=$1
-GTF=$5
+GTF=$4
 CORES=11
 
 export PATH=/lustre/scratch123/tol/teams/grit/mh6/Augustus/scripts:$PATH

@@ -26,7 +26,7 @@ species = config['species']
 work_dir = config['workdir']
 
 rule all:
-    input: 's4_makehub/s4_done'
+    input: "s4_makehub/s4_done","s4_gushr/gushr.gtf"
 
 rule s0_mask_genome:
     input:
@@ -59,7 +59,7 @@ rule s2_alignment:
       "s1_bam2fastq/R1.fq.gz",
       "s1_bam2fastq/R2.fq.gz"
     output:
-      's2_alignment/out2Aligned.out.bam'
+      "s2_alignment/out2Aligned.out.bam"
     shell:
       "bash {scripts}/star.bash {input} s2_alignment"
 
@@ -76,11 +76,22 @@ rule s3_braker:
      input:
        "s0_mask_genome/infile.fa.masked",
        "s2_alignment/out2Aligned.out.bam",
-       's2b_alignment/out4Aligned.out.bam'
+       "s2b_alignment/out4Aligned.out.bam"
      output:
-       "s3_braker/s3_done"
+       "s3_braker/braker/augustus.hints.gtf","s3_braker/s3_done"
      shell:
        "bash {scripts}/braker_test.bash {input} s3_braker {species} && touch s3_done"
+
+rule gushr:
+     input:
+       "s0_mask_genome/infile.fa.masked",
+       "s2_alignment/out2Aligned.out.bam",
+       "s2b_alignment/out4Aligned.out.bam"
+       "s3_braker/braker/augustus.hints.gtf"
+     output:
+       "s4_gushr/gushr.gtf"
+     shell:
+       "bash {scripts}/gushr.bash {input} s4_gushr"
 
 rule s4_makehub:
      input:
