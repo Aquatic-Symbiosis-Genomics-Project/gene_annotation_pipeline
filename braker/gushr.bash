@@ -22,18 +22,18 @@ cd $WD
 bam1=rnaseq.bam
 bam2=rnaseq2.bam
 
-export bam=''
-if [[ $(stat -c%s $bam1) > 21000  && $(stat -c%s $bam2) > 21000 ]]
+export bams=''
+if [[ $(stat -c%s $bam1) > 30000  && $(stat -c%s $bam2) > 30000 ]]
 	then 
-		bam="$bam1"
-elif [[ $(stat -c%s $bam1) > 21000 ]]
+		bam="$bam1,$bam2"
+elif [[ $(stat -c%s $bam1) > 30000 ]]
 	then
 		bams="$bam1"
-elif [[ $(stat -c%s $bam2) > 21000 ]]
+elif [[ $(stat -c%s $bam2) > 30000 ]]
 	then
 		bams="$bam2"
 fi
 
-/software/grit/tools/GUSHR/gushr.py -t $GTF -b $bam -g $GENOME -o gushr -c $CORES
+/software/grit/tools/GUSHR/gushr.py -t $GTF -b $bams -g $GENOME -o gushr -c $CORES
 
 touch gushr_done
