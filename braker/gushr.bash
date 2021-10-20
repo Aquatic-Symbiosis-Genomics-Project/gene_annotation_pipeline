@@ -17,10 +17,13 @@ mkdir -p $WD
 cp $GENOME $WD/genome.sm.fa
 cp $BAM1 $WD/rnaseq.bam
 cp $BAM2 $WD/rnaseq2.bam
+cp $GTF $WD/augustus.gtf
 cd $WD
 
 bam1=rnaseq.bam
 bam2=rnaseq2.bam
+gtf=augustus.gtf
+genome=genome.sm.fa
 
 export bams=''
 if [[ $(stat -c%s $bam1) > 30000  && $(stat -c%s $bam2) > 30000 ]]
@@ -34,6 +37,6 @@ elif [[ $(stat -c%s $bam2) > 30000 ]]
 		bams="$bam2"
 fi
 
-/software/grit/tools/GUSHR/gushr.py -t ../$GTF -b $bams -g $GENOME -o gushr -c $CORES
+/software/grit/tools/GUSHR/gushr.py -t $gtf -b $bams -g $genome -o gushr -c $CORES
 
 touch gushr_done
