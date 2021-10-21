@@ -47,4 +47,4 @@ fi
 
 python /lustre/scratch123/tol/teams/grit/mh6/MakeHub/make_hub.py -g $GENOME -L $LABEL -l $LABEL -e test@email.ac.uk -X ../s3_braker/braker -b $bams
 
-touch s4_makehub/s4_done
+touch s4_done
