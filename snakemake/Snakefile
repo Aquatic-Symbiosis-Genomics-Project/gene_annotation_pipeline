@@ -100,3 +100,12 @@ rule s4_makehub:
        "s4_makehub/s4_done"
      shell:
        "bash {scripts}/make_hub.bash {genome} {species} && touch s4_done"
+    
+rule braker_stats:
+     input:
+       "s3_braker/braker/augustus.hints.gff",
+       "s3_braker/braker/augustus.hints.gtf"
+     output:
+       "braker_stats/stats_done"
+     shell:
+       "bash {scripts}/braker_stats.sh {input} {species} && touch stats_done"
