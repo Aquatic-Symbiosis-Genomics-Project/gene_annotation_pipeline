@@ -1,0 +1,3 @@
+[submodule "annotation_stats"]
+	path = annotation_stats
+	url = https://github.com/Aquatic-Symbiosis-Genomics-Project/annotation_stats.git

@@ -4,11 +4,11 @@
 gff_file="$1"
 gtf_file="$2"
 id="$3"
+wd=`pwd`
 
+python $wd/../annotation_stats/braker_stats.py "$gff_file"  "$gtf_file" "$id" > "$id"_summary.stats
 
-python braker_stats.py "$gff_file"  "$gtf_file" "$id" > "$id"_summary.stats
-
-./braker_plots.R  "$id"_perc_support.txt
+Rscript $wd../annotation_stats/braker_plots.R  "$id"_perc_support.txt
 
 
 
