@@ -22,6 +22,7 @@ export PATH=/software/jre1.8.0_131/bin:/software/grit/conda/envs/python3/bin/:$P
 export MAKEHUB_PATH=/software/grit/tools/MakeHub
 export SAMTOOLS_PATH=/software/grit/bin
 export GUSHR_PATH=/software/grit/tools/GUSHR
+export PROTHINT_PATH=/lustre/scratch123/tol/teams/grit/mh6/ProtHint-2.6.0/bin
 
 mkdir -p $WD
 
