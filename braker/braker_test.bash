@@ -1,5 +1,6 @@
 #!/usr/bin/bash
 
+PROTEINS=$6
 SPECIES=$5
 WD=$4
 BAM1=$2
@@ -53,7 +54,13 @@ if [ -d "$SPECIESDIR" ]
 		rm -rf $SPECIESDIR
 fi
 
-/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --softmasking --bam=$bams -species $SPECIES --cores=$CORES --nocleanup --gff3
+protops=''
+if [ $PROTEINS ]
+	then
+		protopts="--prot_seq=$PROTEINS --etpmode"
+fi
+
+/software/grit/conda/envs/braker/bin/perl /lustre/scratch123/tol/teams/grit/mh6/BRAKER/scripts/braker.pl --genome genome.sm.fa --softmasking --bam=$bams -species $SPECIES --cores=$CORES --nocleanup --gff3 $protopts
 
 # for snakemake
 touch s3_done
