@@ -24,6 +24,7 @@ repeatLibrary = config['repeatLibrary']
 bam = config['bam']
 species = config['species']
 work_dir = config['workdir']
+proteins = config['proteins']
 
 rule all:
     input: "s4_makehub/s4_done","s4_gushr/gushr.gtf"
@@ -78,16 +79,36 @@ rule s3_braker:
        "s2_alignment/out2Aligned.out.bam",
        "s2b_alignment/out4Aligned.out.bam"
      output:
-       "s3_braker/braker/augustus.hints.gtf","s3_braker/s3_done"
+       "s3_braker/braker/augustus.hints.gtf","s3_braker/s3_done","s3_braker/braker/augustus.hints.gtf"
      shell:
        "bash {scripts}/braker_test.bash {input} s3_braker {species} && touch s3_done"
+
+rule s3_protein_braker:
+     input:
+       "s0_mask_genome/infile.fa.masked",
+       proteins
+     output:
+       "s3_protein_braker/braker/augustus.hints.gtf","s3_braker/s3_protein_braker_done","s3_protein_braker/braker/augustus.hints.gtf"
+     shell:
+       "bash {scripts}/braker_protein.bash {input} s3_protein_braker {species} && touch s3_protein_braker_done"
+
+rule tsebra:
+     input:
+       "s3_braker/braker/augustus.hints.gtf",
+       "s3_protein_braker/braker/augustus.hints.gtf",
+       "s3_braker/braker/augustus.hints.gtf",
+       "s3_protein_braker/braker/augustus.hints.gtf"
+     output:
+       "tsebra/combined.gtf","tsebra/tsebra_done"
+     shell:
+       "bash {scripts}/tsebra.bash {input}"
 
 rule gushr:
      input:
        "s0_mask_genome/infile.fa.masked",
        "s2_alignment/out2Aligned.out.bam",
        "s2b_alignment/out4Aligned.out.bam",
-       "s3_braker/braker/augustus.hints.gtf"
+       "tsebra/combined.gtf"
      output:
        "s4_gushr/gushr.gtf"
      shell:

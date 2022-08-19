@@ -3,6 +3,7 @@ bam: /lustre/scratch123/tol/teams/grit/mh6/braker_test_data/rnaseq_SUPER1.bam
 repeatLibrary: /lustre/scratch123/tol/teams/grit/mh6/braker_test_data/icAdaBipu1-families.fa
 species: ladybird
 workdir: './'
+proteins: some_proteins.fa
 analysis:
   s0_bam2fastq:
     bam: test.bam
